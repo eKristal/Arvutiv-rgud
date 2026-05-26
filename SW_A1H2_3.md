@@ -1,13 +1,8 @@
-## SW_A1H2_3 seadistamine
+## SW_A1H2_3 
 
-Kommutaator **SW_A1H2_3** asub **Asukoht 1 Hoone 2-s** ehk peamajas. Selle switchi külge on ühendatud peamaja printer, IP-kaamera ja WiFi pääsupunkt. Switch on ühendatud keskse switchiga **SW_A1H2_1**, mille kaudu liigub VLAN-ide liiklus edasi ruuterisse ja teistesse võrkudesse.
+Kommutaator **SW_A1H2_3** asub **Asukoht 1 Hoone 2-s** ehk peamajas. Selle switchi külge on ühendatud peamaja printer, IP-kaamera ja WiFi pääsupunkt.
 
-Selle switchi ülesanne on jagada seadmed õigesse VLAN-i:
-
-- printer läheb printerite VLAN-i;
-- IP-kaamera läheb kaamerate VLAN-i;
-- WiFi pääsupunkt läheb haldusvõrku;
-- ühendus keskse switchiga töötab trunk-pordina.
+Switch on ühendatud keskse switchiga **SW_A1H2_1**, mille kaudu liigub VLAN-ide liiklus edasi ruuterisse ja teistesse võrkudesse. Selle switchi ülesanne on paigutada printer, kaamera ja WiFi pääsupunkt õigesse VLAN-i.
 
 ### Kasutatud pordid
 
@@ -18,7 +13,7 @@ Selle switchi ülesanne on jagada seadmed õigesse VLAN-i:
 | Fa0/3 | CAM_A1H2 | 100 | IP-kaamerate VLAN |
 | Fa0/4 | AP_A1H2 | 150 | Haldusvõrk / WiFi AP haldus |
 
-### Cisco konfiguratsioon
+###  konfiguratsioon
 
 ```cisco
 enable
@@ -56,21 +51,26 @@ vlan 150
 interface fa0/1
  description TRUNK_TO_SW_A1H2_1
  switchport mode trunk
+ switchport trunk allowed vlan 50,60,70,80,90,100,110,111,112,120,130,140,150
+ spanning-tree portfast trunk
 
 interface fa0/2
  description PRN_A1H2
  switchport mode access
  switchport access vlan 90
+ no shutdown
 
 interface fa0/3
  description CAM_A1H2
  switchport mode access
  switchport access vlan 100
+ no shutdown
 
 interface fa0/4
  description AP_A1H2
  switchport mode access
  switchport access vlan 150
+ no shutdown
 
 end
 write memory

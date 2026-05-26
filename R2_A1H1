@@ -1,0 +1,51 @@
+R2_A1H1 seadistamine
+
+Ruuter R2_A1H1 asub Asukoht 1 Hoone 1-s ehk tootmis- ja kontorihoones. Selle ruuteri kaudu liiguvad Hoone 1 tootmise, kontori, projekteerijate ja tööpinkide VLAN-id. Ruuter on ühendatud keskse switchiga SW_A1H1_1 ning peamaja ruuteriga R1_A1H2.
+
+Märkus Packet Traceri mudeli kohta
+
+Packet Traceris seadistatakse ruuteril R2_A1H1 Hoone 1 põhilised unikaalsed VLAN-id: tootmine, kontor, projekteerijad ja tööpingid. Printerite, kaamerate ja haldusvõrk on IP-plaanis Asukoht 1 ühised võrgud ning neid käsitletakse lihtsustatud mudelis dokumentatsiooni tasemel.
+
+Kasutatud pordid
+Port	Ühendatud seade	IP / VLAN	Selgitus
+G0/0	SW_A1H1_1	trunk	Ühendus Hoone 1 keskse switchiga
+G0/1	R1_A1H2	10.31.255.8/30	Fiiberühendus peamajaga
+Cisco konfiguratsioon
+enable
+configure terminal
+
+hostname R2_A1H1
+
+interface g0/0
+ description TRUNK_TO_SW_A1H1_1
+ no shutdown
+
+interface g0/0.10
+ description GW_TOOTMINE_A1H1
+ encapsulation dot1Q 10
+ ip address 10.31.10.1 255.255.255.0
+
+interface g0/0.20
+ description GW_KONTOR_A1H1
+ encapsulation dot1Q 20
+ ip address 10.31.20.1 255.255.255.0
+
+interface g0/0.30
+ description GW_PROJEKTEERIJAD_A1H1
+ encapsulation dot1Q 30
+ ip address 10.31.30.1 255.255.255.0
+
+interface g0/0.40
+ description GW_TOOPINGID_A1H1
+ encapsulation dot1Q 40
+ ip address 10.31.40.1 255.255.255.0
+
+interface g0/1
+ description LINK_TO_R1_A1H2_FIBER_200M
+ ip address 10.31.255.10 255.255.255.252
+ no shutdown
+
+ip route 0.0.0.0 0.0.0.0 10.31.255.9
+
+end
+write memory

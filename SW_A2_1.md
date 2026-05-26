@@ -1,0 +1,62 @@
+# SW_A2_1 
+
+Kommutaator **SW_A2_1** asub **Asukoht 2** tootmis- ja kontorihoones.
+
+See on Asukoht 2 keskne switch, mille kaudu ühenduvad:
+
+- ruuter **R3_A2**
+- kasutajate switch **SW_A2_2**
+- tööpinkide, printeri, kaamera ja AP switch **SW_A2_3**
+
+---
+
+# Kasutatud pordid
+
+| Port | Ühendatud seade | VLAN | Selgitus |
+|---|---|---|---|
+| Fa0/1 | R3_A2 | trunk | Ühendus Asukoht 2 ruuteriga |
+| Fa0/2 | SW_A2_2 | trunk | Ühendus tootmise ja kontori switchiga |
+| Fa0/3 | SW_A2_3 | trunk | Ühendus tööpinkide, printeri, kaamera ja AP switchiga |
+
+---
+
+#  konfiguratsioon
+
+```cisco
+enable
+configure terminal
+
+hostname SW_A2_1
+
+vlan 10
+ name TOOTMINE_A2
+
+vlan 20
+ name KONTOR_A2
+
+vlan 40
+ name TOOPINGID_A2
+
+vlan 90
+ name PRINTERID_A2
+
+vlan 100
+ name KAAMERAD_A2
+
+vlan 151
+ name HALDUS_A2
+
+interface fa0/1
+ description TRUNK_TO_R3_A2
+ switchport mode trunk
+
+interface fa0/2
+ description TRUNK_TO_SW_A2_2
+ switchport mode trunk
+
+interface fa0/3
+ description TRUNK_TO_SW_A2_3
+ switchport mode trunk
+
+end
+write memory

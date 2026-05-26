@@ -1,8 +1,24 @@
-Peamaja keskne kommutaator SW_A1H2_1 ühendab R1 ruuteri, serverid ning teised peamaja kommutaatorid. Ruuteri ja teiste kommutaatorite suunalised pordid seadistati trunk-portidena, 
-sest nende kaudu liigub mitme VLAN-i liiklus. 
-Serverite pordid seadistati access-portidena vastavalt serverivõrkude VLAN-idele.
+## SW_A1H2_1 seadistamine
 
+Kommutaator **SW_A1H2_1** asub Asukoht 1 Hoone 2-s ehk peamajas. Tegemist on keskse switchiga, mille külge on ühendatud peamaja ruuter **R1_A1H2**, teised peamaja switchid ning serverid. Selle switchi kaudu liigub VLAN-ide liiklus edasi ruuterisse ja teistesse võrkudesse.
 
+### Kasutatud pordid
+
+| Port | Ühendatud seade | VLAN | Selgitus |
+|---|---|---:|---|
+| G0/1 | R1_A1H2 | trunk | Ühendus peamaja ruuteriga |
+| Fa0/2 | SW_A1H2_2 | trunk | Ühendus osakondade switchiga |
+| Fa0/3 | SW_A1H2_3 | trunk | Ühendus printerite, kaamera ja AP switchiga |
+| Fa0/4 | SRV_AD_DNS | 110 | AD ja DNS server |
+| Fa0/5 | SRV_FILE | 110 | Failiserver |
+| Fa0/6 | SRV_WEB | 112 | Veebiserver DMZ võrgus |
+| Fa0/7 | SRV_VMS_1 | 111 | Videovalve server 1 |
+| Fa0/8 | SRV_VMS_2 | 111 | Videovalve server 2 |
+| Fa0/9 | SRV_OSAKONNAD | 110 | Osakondade serverid |
+
+### Cisco konfiguratsioon
+
+```cisco
 enable
 configure terminal
 
@@ -79,4 +95,3 @@ interface fa0/9
 
 end
 write memory
-

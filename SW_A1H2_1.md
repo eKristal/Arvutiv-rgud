@@ -1,6 +1,8 @@
-## SW_A1H2_1 seadistamine
+## SW_A1H2_1 
 
-Kommutaator **SW_A1H2_1** asub Asukoht 1 Hoone 2-s ehk peamajas. Tegemist on keskse switchiga, mille külge on ühendatud peamaja ruuter **R1_A1H2**, teised peamaja switchid ning serverid. Selle switchi kaudu liigub VLAN-ide liiklus edasi ruuterisse ja teistesse võrkudesse.
+Kommutaator **SW_A1H2_1** asub **Asukoht 1 Hoone 2-s** ehk peamajas. See on keskne switch, mille kaudu ühenduvad **R1_A1H2 ruuter**, teised peamaja switchid ning serverid.
+
+Selle switchi kaudu liigub VLAN-ide liiklus edasi ruuterisse ja teistesse võrkudesse. Kuna tegemist on keskse switchiga, on siin seadistatud nii trunk-pordid kui ka serverite access-pordid.
 
 ### Kasutatud pordid
 
@@ -16,9 +18,9 @@ Kommutaator **SW_A1H2_1** asub Asukoht 1 Hoone 2-s ehk peamajas. Tegemist on kes
 | Fa0/8 | SRV_VMS_2 | 111 | Videovalve server 2 |
 | Fa0/9 | SRV_OSAKONNAD | 110 | Osakondade serverid |
 
-### Cisco konfiguratsioon
+### konfiguratsioon
 
-```cisco
+```
 enable
 configure terminal
 
@@ -54,14 +56,20 @@ vlan 150
 interface g0/1
  description TRUNK_TO_R1_A1H2
  switchport mode trunk
+ switchport trunk allowed vlan 50,60,70,80,90,100,110,111,112,120,130,140,150
+ spanning-tree portfast trunk
 
 interface fa0/2
  description TRUNK_TO_SW_A1H2_2
  switchport mode trunk
+ switchport trunk allowed vlan 50,60,70,80,90,100,110,111,112,120,130,140,150
+ spanning-tree portfast trunk
 
 interface fa0/3
  description TRUNK_TO_SW_A1H2_3
  switchport mode trunk
+ switchport trunk allowed vlan 50,60,70,80,90,100,110,111,112,120,130,140,150
+ spanning-tree portfast trunk
 
 interface fa0/4
  description SRV_AD_DNS

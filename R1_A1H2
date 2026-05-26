@@ -1,0 +1,103 @@
+R1_A1H2 seadistamine
+
+Ruuter R1_A1H2 asub Asukoht 1 Hoone 2-s ehk peamajas. See on peamine ruuter, mille kaudu liigub peamaja VLAN-ide liiklus, ühendus Asukoht 1 Hoone 1-ga, ühendus Asukoht 2-ga ning internetiühendus ISP suunas.
+
+Kasutatud pordid
+Port	Ühendatud seade	IP / VLAN	Selgitus
+G0/0	SW_A1H2_1	trunk	VLAN-ide gateway’d peamajas
+G0/1	R2_A1H1	10.31.255.8/30	Asukoht 1 hoonetevaheline ühendus
+S0/0/0	R3_A2	10.31.255.0/30	PPP VPN ühendus Asukoht 2-ga
+G0/2	ISP	203.0.113.0/30	Internetiühendus ISP suunas
+Cisco konfiguratsioon
+enable
+configure terminal
+
+hostname R1_A1H2
+
+interface g0/0
+ description TRUNK_TO_SW_A1H2_1
+ no shutdown
+
+interface g0/0.50
+ description GW_JUHATUS_A1H2
+ encapsulation dot1Q 50
+ ip address 10.31.50.1 255.255.255.0
+
+interface g0/0.60
+ description GW_MYYK_A1H2
+ encapsulation dot1Q 60
+ ip address 10.31.60.1 255.255.255.0
+
+interface g0/0.70
+ description GW_PERSONAL_A1H2
+ encapsulation dot1Q 70
+ ip address 10.31.70.1 255.255.255.0
+
+interface g0/0.80
+ description GW_ARENDUS_A1H2
+ encapsulation dot1Q 80
+ ip address 10.31.80.1 255.255.255.0
+
+interface g0/0.90
+ description GW_PRINTERID_A1
+ encapsulation dot1Q 90
+ ip address 10.31.90.1 255.255.255.0
+
+interface g0/0.100
+ description GW_KAAMERAD_A1
+ encapsulation dot1Q 100
+ ip address 10.31.100.1 255.255.255.0
+
+interface g0/0.110
+ description GW_SERVERID
+ encapsulation dot1Q 110
+ ip address 10.31.200.1 255.255.255.0
+
+interface g0/0.111
+ description GW_VALVE_SERVERID
+ encapsulation dot1Q 111
+ ip address 10.31.210.1 255.255.255.0
+
+interface g0/0.112
+ description GW_DMZ
+ encapsulation dot1Q 112
+ ip address 10.31.220.1 255.255.255.0
+
+interface g0/0.150
+ description GW_HALDUS_A1
+ encapsulation dot1Q 150
+ ip address 10.31.150.1 255.255.255.0
+
+interface g0/1
+ description LINK_TO_R2_A1H1_FIBER_200M
+ ip address 10.31.255.9 255.255.255.252
+ no shutdown
+
+interface s0/0/0
+ description PPP_VPN_TO_R3_A2
+ ip address 10.31.255.1 255.255.255.252
+ encapsulation ppp
+ clock rate 64000
+ no shutdown
+
+interface g0/2
+ description LINK_TO_ISP
+ ip address 203.0.113.2 255.255.255.252
+ no shutdown
+
+ip route 10.31.10.0 255.255.255.0 10.31.255.10
+ip route 10.31.20.0 255.255.255.0 10.31.255.10
+ip route 10.31.30.0 255.255.255.0 10.31.255.10
+ip route 10.31.40.0 255.255.255.0 10.31.255.10
+
+ip route 10.31.110.0 255.255.255.0 10.31.255.2
+ip route 10.31.120.0 255.255.255.0 10.31.255.2
+ip route 10.31.140.0 255.255.255.0 10.31.255.2
+ip route 10.31.151.0 255.255.255.0 10.31.255.2
+ip route 10.31.180.0 255.255.255.0 10.31.255.2
+ip route 10.31.190.0 255.255.255.0 10.31.255.2
+
+ip route 0.0.0.0 0.0.0.0 203.0.113.1
+
+end
+write memory

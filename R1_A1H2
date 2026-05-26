@@ -1,14 +1,30 @@
-R1_A1H2 seadistamine
+# R1_A1H2 
 
-Ruuter R1_A1H2 asub Asukoht 1 Hoone 2-s ehk peamajas. See on peamine ruuter, mille kaudu liigub peamaja VLAN-ide liiklus, ühendus Asukoht 1 Hoone 1-ga, ühendus Asukoht 2-ga ning internetiühendus ISP suunas.
+Ruuter **R1_A1H2** asub **Asukoht 1 Hoone 2-s** ehk peamajas.
 
-Kasutatud pordid
-Port	Ühendatud seade	IP / VLAN	Selgitus
-G0/0	SW_A1H2_1	trunk	VLAN-ide gateway’d peamajas
-G0/1	R2_A1H1	10.31.255.8/30	Asukoht 1 hoonetevaheline ühendus
-S0/0/0	R3_A2	10.31.255.0/30	PPP VPN ühendus Asukoht 2-ga
-G0/2	ISP	203.0.113.0/30	Internetiühendus ISP suunas
-Cisco konfiguratsioon
+See on peamine ruuter, mille kaudu liigub:
+
+- peamaja VLAN-ide liiklus
+- ühendus Asukoht 1 Hoone 1-ga
+- ühendus Asukoht 2-ga
+- internetiühendus ISP suunas
+
+---
+
+# Kasutatud pordid
+
+| Port | Ühendatud seade | IP / VLAN | Selgitus |
+|---|---|---|---|
+| G0/0 | SW_A1H2_1 | trunk | VLAN-ide gateway’d peamajas |
+| G0/1 | R2_A1H1 | 10.31.255.8/30 | Asukoht 1 hoonetevaheline ühendus |
+| S0/0/0 | R3_A2 | 10.31.255.0/30 | PPP VPN ühendus Asukoht 2-ga |
+| G0/2 | ISP | 203.0.113.0/30 | Internetiühendus ISP suunas |
+
+---
+
+#  konfiguratsioon
+
+```cisco
 enable
 configure terminal
 

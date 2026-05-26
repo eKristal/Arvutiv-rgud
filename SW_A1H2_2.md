@@ -1,6 +1,8 @@
-## SW_A1H2_2 seadistamine
+## SW_A1H2_2 
 
-Kommutaator **SW_A1H2_2** asub Asukoht 1 Hoone 2-s ehk peamajas. Selle switchi külge on ühendatud juhatuse, müügi-, personali- ja arendusosakonna näidisarvutid. Switch on ühendatud keskse switchiga **SW_A1H2_1**, mille kaudu liigub VLAN-ide liiklus edasi ruuterisse ja teistesse võrkudesse.
+Kommutaator **SW_A1H2_2** asub **Asukoht 1 Hoone 2-s** ehk peamajas. Selle switchi külge on ühendatud juhatuse, müügi-, personali- ja arendusosakonna näidisarvutid.
+
+Switch on ühendatud keskse switchiga **SW_A1H2_1**, mille kaudu liigub VLAN-ide liiklus edasi ruuterisse ja teistesse võrkudesse. Selle switchi ülesanne on paigutada iga osakonna arvuti õigesse VLAN-i.
 
 ### Kasutatud pordid
 
@@ -12,7 +14,7 @@ Kommutaator **SW_A1H2_2** asub Asukoht 1 Hoone 2-s ehk peamajas. Selle switchi k
 | Fa0/4 | PC_Personal | 70 | Personaliosakonna VLAN |
 | Fa0/5 | PC_Arendus | 80 | Arendusosakonna VLAN |
 
-### Cisco konfiguratsioon
+###  konfiguratsioon
 
 ```cisco
 enable
@@ -50,26 +52,32 @@ vlan 150
 interface fa0/1
  description TRUNK_TO_SW_A1H2_1
  switchport mode trunk
+ switchport trunk allowed vlan 50,60,70,80,90,100,110,111,112,120,130,140,150
+ spanning-tree portfast trunk
 
 interface fa0/2
  description PC_JUHATUS
  switchport mode access
  switchport access vlan 50
+ no shutdown
 
 interface fa0/3
  description PC_MYYK
  switchport mode access
  switchport access vlan 60
+ no shutdown
 
 interface fa0/4
  description PC_PERSONAL
  switchport mode access
  switchport access vlan 70
+ no shutdown
 
 interface fa0/5
  description PC_ARENDUS
  switchport mode access
  switchport access vlan 80
+ no shutdown
 
 end
 write memory

@@ -1,0 +1,58 @@
+R3_A2 seadistamine
+
+Ruuter R3_A2 asub Asukoht 2 tootmis- ja kontorihoones. Selle ruuteri kaudu liiguvad Asukoht 2 tootmise, kontori, tööpinkide, printerite, kaamerate ja haldusvõrgu VLAN-id. Ruuter on ühendatud keskse switchiga SW_A2_1 ning PPP ühendusega peamaja ruuteri R1_A1H2 külge.
+
+Kasutatud pordid
+Port	Ühendatud seade	IP / VLAN	Selgitus
+G0/0	SW_A2_1	trunk	Ühendus Asukoht 2 keskse switchiga
+S0/0/0	R1_A1H2	10.31.255.0/30	PPP VPN ühendus Asukoht 1-ga
+Cisco konfiguratsioon
+enable
+configure terminal
+
+hostname R3_A2
+
+interface g0/0
+ description TRUNK_TO_SW_A2_1
+ no shutdown
+
+interface g0/0.10
+ description GW_TOOTMINE_A2
+ encapsulation dot1Q 10
+ ip address 10.31.110.1 255.255.255.0
+
+interface g0/0.20
+ description GW_KONTOR_A2
+ encapsulation dot1Q 20
+ ip address 10.31.120.1 255.255.255.0
+
+interface g0/0.40
+ description GW_TOOPINGID_A2
+ encapsulation dot1Q 40
+ ip address 10.31.140.1 255.255.255.0
+
+interface g0/0.90
+ description GW_PRINTERID_A2
+ encapsulation dot1Q 90
+ ip address 10.31.190.1 255.255.255.0
+
+interface g0/0.100
+ description GW_KAAMERAD_A2
+ encapsulation dot1Q 100
+ ip address 10.31.180.1 255.255.255.0
+
+interface g0/0.151
+ description GW_HALDUS_A2
+ encapsulation dot1Q 151
+ ip address 10.31.151.1 255.255.255.0
+
+interface s0/0/0
+ description PPP_VPN_TO_R1_A1H2
+ ip address 10.31.255.2 255.255.255.252
+ encapsulation ppp
+ no shutdown
+
+ip route 0.0.0.0 0.0.0.0 10.31.255.1
+
+end
+write memory
